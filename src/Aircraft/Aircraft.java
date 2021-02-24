@@ -32,15 +32,9 @@ public abstract class Aircraft implements EventListener {
 
     protected String[] messages = null;
     abstract protected void InitMessagesList();
-    protected String[] GetMessages() {
-        return this.messages;
-    }
 
     protected Coordinates[] weatherOffsets = null;
     abstract protected void InitWeatherOffsetsList();
-    protected Coordinates[] GetWeatherOffsets() {
-        return this.weatherOffsets;
-    }
 
     protected Aircraft(AircraftType type, String name, Coordinates coordinates)
     {
@@ -64,9 +58,9 @@ public abstract class Aircraft implements EventListener {
     {
         Weather weather = weatherTower.GetWeather(coordinates);
 
-        weatherTower.Broadcast(name, GetMessages()[weather.ordinal()]);
+        weatherTower.Broadcast(name, messages[weather.ordinal()]);
 
-        UpdatePosition(GetWeatherOffsets()[weather.ordinal()]);
+        UpdatePosition(weatherOffsets[weather.ordinal()]);
     }
 
     private void Landing()
