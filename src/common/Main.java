@@ -9,7 +9,6 @@ public class Main {
 
         Scenario scenario = null;
 
-
         try {
             if (args.length == 0) {
                 throw new IllegalArgumentException("Expected file");

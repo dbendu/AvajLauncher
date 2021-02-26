@@ -17,6 +17,9 @@ public class WeatherTower extends Tower {
         return provider.GetCurrentWeather(coordinates);
     }
 
+    public static final int MaxHeight = 100;
+    public static final int MinHeight = 0;
+
     public void UpdateWeatherInfo() {
 
         for (int i = 0; i < aircrafts.size(); ++i) {
@@ -24,7 +27,7 @@ public class WeatherTower extends Tower {
 
             aircraft.OnAction(EventListener.Event.WeatherChanged);
 
-            if (aircraft.GetCoordinates().height == Coordinates.MinHeight) {
+            if (aircraft.GetCoordinates().height == MinHeight) {
                 aircraft.OnAction(EventListener.Event.Unregistering);
 
                 Unregister(aircraft);

@@ -49,7 +49,7 @@ public class Scenario {
         return new Scenario(Integer.parseInt(iters), Collections.unmodifiableList(aircrafts));
     }
 
-//region Registation
+//region Creation
 
     private static Aircraft CreateAircraftByDescription(String description) throws IllegalArgumentException {
         String[] tokens = description.split(" ");

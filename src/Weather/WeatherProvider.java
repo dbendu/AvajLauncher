@@ -2,8 +2,6 @@ package Weather;
 
 import common.Coordinates;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 class WeatherProvider {

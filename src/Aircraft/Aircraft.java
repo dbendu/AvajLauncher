@@ -54,9 +54,6 @@ public abstract class Aircraft implements EventListener {
         weatherTower = null;
     }
 
-//region Moving
-
-    // Weather changing action
     @Override
     public void OnAction(Event event)
     {
@@ -91,16 +88,15 @@ public abstract class Aircraft implements EventListener {
         int latitude = this.coordinates.latitude + offset.latitude;
         int height = this.coordinates.height + offset.height;
 
-        if (height > Coordinates.MaxHeight) {
-            height = Coordinates.MaxHeight;
-        } else if (height < Coordinates.MinHeight) {
-            height = Coordinates.MinHeight;
+        // correcting
+        if (height > WeatherTower.MaxHeight) {
+            height = WeatherTower.MaxHeight;
+        } else if (height < WeatherTower.MinHeight) {
+            height = WeatherTower.MinHeight;
         }
 
         this.coordinates = new Coordinates(longitude, latitude, height);
     }
-
-//endregion
 
 //region Aircraft fabric
 
