@@ -2,6 +2,7 @@ package Weather;
 
 import Aircraft.Aircraft;
 import common.Coordinates;
+import common.EventListener;
 import common.Tower;
 
 public class WeatherTower extends Tower {
@@ -17,17 +18,18 @@ public class WeatherTower extends Tower {
     }
 
     public void UpdateWeatherInfo() {
-        int size = aircrafts.size();
-        for (int i = 0; i < size; ++i) {
+
+        for (int i = 0; i < aircrafts.size(); ++i) {
             Aircraft aircraft = aircrafts.get(i);
 
-            provider.ChangeWeather(aircraft.GetCoordinates());
-            aircraft.OnAction();
-            provider.DeleteWeatherPoint(aircraft.GetCoordinates());
+            aircraft.OnAction(EventListener.Event.WeatherChanged);
 
-            if (aircrafts.size() < size) { // means thar aircraft was removed
+            if (aircraft.GetCoordinates().height == Coordinates.MinHeight) {
+                aircraft.OnAction(EventListener.Event.Unregistering);
+
+                Unregister(aircraft);
+
                 i -= 1;
-                size -= 1;
             }
         }
     }

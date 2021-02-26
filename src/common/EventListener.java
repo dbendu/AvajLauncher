@@ -2,5 +2,11 @@ package common;
 
 public interface EventListener {
 
-    void OnAction();
+    enum Event
+    {
+        WeatherChanged,
+        Unregistering
+    }
+
+    void OnAction(Event event);
 }

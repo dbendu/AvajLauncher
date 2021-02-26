@@ -50,12 +50,28 @@ public abstract class Aircraft implements EventListener {
         weatherTower = tower;
     }
 
+    public void UnregisterTower() {
+        weatherTower = null;
+    }
+
 //region Moving
 
     // Weather changing action
     @Override
-    public void OnAction()
+    public void OnAction(Event event)
     {
+        switch (event) {
+            case WeatherChanged:
+                WeatherChangedActionHandler();
+                break;
+
+            case Unregistering:
+                Landing();
+                break;
+        }
+    }
+
+    private void WeatherChangedActionHandler() {
         Weather weather = weatherTower.GetWeather(coordinates);
 
         weatherTower.Broadcast(name, messages[weather.ordinal()]);
@@ -65,8 +81,9 @@ public abstract class Aircraft implements EventListener {
 
     private void Landing()
     {
-        weatherTower.Broadcast(name, "coordinates: " + coordinates + ". Landing.");
-        weatherTower.Unregister(this);
+        weatherTower.Broadcast(name, "My coordinates: " + coordinates + ". Landing.");
+
+        UnregisterTower();
     }
 
     void UpdatePosition(Coordinates offset) {
@@ -74,10 +91,13 @@ public abstract class Aircraft implements EventListener {
         int latitude = this.coordinates.latitude + offset.latitude;
         int height = this.coordinates.height + offset.height;
 
-        this.coordinates = new Coordinates(longitude, latitude, height);
+        if (height > Coordinates.MaxHeight) {
+            height = Coordinates.MaxHeight;
+        } else if (height < Coordinates.MinHeight) {
+            height = Coordinates.MinHeight;
+        }
 
-        if (height == 0)
-            Landing();
+        this.coordinates = new Coordinates(longitude, latitude, height);
     }
 
 //endregion
