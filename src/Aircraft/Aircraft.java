@@ -74,11 +74,6 @@ public abstract class Aircraft implements EventListener {
         int latitude = this.coordinates.latitude + offset.latitude;
         int height = this.coordinates.height + offset.height;
 
-        if (height > 100)
-            height = 100;
-        if (height <= 0)
-            height = 0;
-
         this.coordinates = new Coordinates(longitude, latitude, height);
 
         if (height == 0)
