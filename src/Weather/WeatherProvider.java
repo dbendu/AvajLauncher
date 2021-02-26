@@ -4,6 +4,7 @@ import common.Coordinates;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 class WeatherProvider {
 
@@ -25,22 +26,35 @@ class WeatherProvider {
 
 //endregion
 
-//region WeatherGenerating
+//region Weather management
 
-    private static Weather currentWeather = Weather.Rain;
+    private final static Random random = new Random(System.currentTimeMillis());
 
     private final static Weather[] allWeathers = Weather.values();
 
     private void AddWeatherPoint(Coordinates coordinates)
     {
-        weatherMap.put(coordinates, currentWeather);
-
-        currentWeather = GetNextWeather(currentWeather);
+        weatherMap.put(coordinates, GenerateWeather());
     }
 
-    private Weather GetNextWeather(Weather currentWeather)
-    {
-        return allWeathers[(currentWeather.ordinal() + 1) % allWeathers.length];
+    private Weather GenerateWeather() {
+        int index = Math.abs(random.nextInt());
+
+        return allWeathers[index % allWeathers.length];
+    }
+
+    public void DeleteWeatherPoint(Coordinates coordinates) {
+        weatherMap.remove(coordinates);
+    }
+
+    private Weather GenerateDifferentWeather(Weather weather) {
+        Weather newWeather = weather;
+
+        while (newWeather == weather) {
+            newWeather = GenerateWeather();
+        }
+
+        return newWeather;
     }
 
 //endregion
@@ -63,7 +77,7 @@ class WeatherProvider {
             return weatherMap.get(coordinates);
         }
         else {
-            Weather newWeather = GetNextWeather(weatherMap.get(coordinates));
+            Weather newWeather = GenerateDifferentWeather(weatherMap.get(coordinates));
             weatherMap.put(coordinates, newWeather);
 
             return newWeather;
@@ -72,8 +86,6 @@ class WeatherProvider {
 
 //endregion
 
-    public void DeleteCoordinates(Coordinates coordinates) {
-        weatherMap.remove(coordinates);
-    }
+
 
 }

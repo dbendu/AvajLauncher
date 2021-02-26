@@ -1,11 +1,8 @@
 package Weather;
 
 import Aircraft.Aircraft;
-import Weather.WeatherProvider;
 import common.Coordinates;
 import common.Tower;
-
-import java.util.Iterator;
 
 public class WeatherTower extends Tower {
 
@@ -26,7 +23,7 @@ public class WeatherTower extends Tower {
 
             provider.ChangeWeather(aircraft.GetCoordinates());
             aircraft.OnAction();
-            provider.DeleteCoordinates(aircraft.GetCoordinates());
+            provider.DeleteWeatherPoint(aircraft.GetCoordinates());
 
             if (aircrafts.size() < size) { // means thar aircraft was removed
                 i -= 1;
