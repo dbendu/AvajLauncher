@@ -9,8 +9,13 @@ public class Main {
 
         Scenario scenario = null;
 
+
         try {
-            scenario = Scenario.Load("C:\\Users\\user\\Desktop\\input.txt");
+            if (args.length == 0) {
+                throw new IllegalArgumentException("Expected file");
+            }
+
+            scenario = Scenario.Load(args[0]);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             System.exit(1);
