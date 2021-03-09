@@ -1,7 +1,7 @@
 package Aircraft;
 
 import Weather.Weather;
-import common.Coordinates;
+import Coordinates.Coordinates;
 
 class Balloon extends Aircraft {
 

@@ -1,10 +1,22 @@
 package Weather;
 
-import common.Coordinates;
+import Coordinates.Coordinates;
 
 import java.util.Random;
 
-class WeatherProvider {
+public class WeatherProvider {
+
+//region unused
+
+    @Deprecated
+    private static String[] weather = null;
+
+    @Deprecated
+    public String GetCurrentWeatherDep(Coordinates coordinates) {
+        return "";
+    }
+
+//endregion
 
 //region Singleton
 

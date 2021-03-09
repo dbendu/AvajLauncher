@@ -1,11 +1,33 @@
-package common;
+package Tower;
 
 import Aircraft.Aircraft;
+import Flyable.Flyable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Tower {
+
+//region unused
+
+    @Deprecated
+    private List<Flyable> observers = null;
+
+    @Deprecated
+    public void Register(Flyable flyable) {
+
+    }
+
+    @Deprecated
+    public void Unregister(Flyable flyable) {
+
+    }
+
+    protected void ConditionsChanged() {
+
+    }
+
+//endregion
 
     protected Radio radio;
 
@@ -30,6 +52,7 @@ public abstract class Tower {
     {
         if (aircrafts.remove(aircraft)) {
             Broadcast("Tower", aircraft.GetName() + " unregistered from weather tower.");
+            aircraft.UnregisterTower();
         }
     }
 
@@ -42,5 +65,10 @@ public abstract class Tower {
     }
 
 //endregion
+
+    public List<Aircraft> GetAircrafts()
+    {
+        return aircrafts;
+    }
 
 }

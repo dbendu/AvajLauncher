@@ -1,4 +1,4 @@
-package common;
+package Coordinates;
 
 public class Coordinates {
 

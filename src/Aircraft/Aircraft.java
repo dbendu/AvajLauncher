@@ -1,10 +1,22 @@
 package Aircraft;
 
+import Coordinates.Coordinates;
+import EventListener.EventListener;
+import Flyable.Flyable;
 import Weather.Weather;
-import Weather.WeatherTower;
-import common.*;
+import Tower.WeatherTower;
 
-public abstract class Aircraft implements EventListener {
+public abstract class Aircraft implements EventListener, Flyable {
+
+//region unused
+
+    @Override
+    @Deprecated
+    public void UpdateConditions() {
+
+    }
+
+//endregion
 
 //region Id management
 
@@ -55,17 +67,9 @@ public abstract class Aircraft implements EventListener {
     }
 
     @Override
-    public void OnAction(Event event)
+    public void OnAction()
     {
-        switch (event) {
-            case WeatherChanged:
-                WeatherChangedActionHandler();
-                break;
-
-            case Unregistering:
-                Landing();
-                break;
-        }
+        WeatherChangedActionHandler();
     }
 
     private void WeatherChangedActionHandler() {
@@ -83,7 +87,7 @@ public abstract class Aircraft implements EventListener {
         UnregisterTower();
     }
 
-    void UpdatePosition(Coordinates offset) {
+    private void UpdatePosition(Coordinates offset) {
         int longitude = this.coordinates.longitude + offset.longitude;
         int latitude = this.coordinates.latitude + offset.latitude;
         int height = this.coordinates.height + offset.height;

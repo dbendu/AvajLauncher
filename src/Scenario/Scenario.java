@@ -1,6 +1,7 @@
-package common;
+package Scenario;
 
 import Aircraft.Aircraft;
+import Coordinates.Coordinates;
 
 import java.io.File;
 import java.io.FileNotFoundException;

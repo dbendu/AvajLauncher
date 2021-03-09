@@ -1,11 +1,25 @@
-package Weather;
+package Tower;
 
 import Aircraft.Aircraft;
-import common.Coordinates;
-import common.EventListener;
-import common.Tower;
+import Coordinates.Coordinates;
+import Weather.Weather;
+import Weather.WeatherProvider;
 
 public class WeatherTower extends Tower {
+
+//region unused
+
+    @Deprecated
+    public String GetWeatherDep(Coordinates coordinates) {
+        return null;
+    }
+
+    @Deprecated
+    void ChangeWeather() {
+
+    }
+
+//endregion
 
     private final WeatherProvider provider;
 
@@ -25,25 +39,18 @@ public class WeatherTower extends Tower {
         for (int i = 0; i < aircrafts.size(); ++i) {
             Aircraft aircraft = aircrafts.get(i);
 
-            aircraft.OnAction(EventListener.Event.WeatherChanged);
+            aircraft.OnAction();
 
             if (aircraft.GetCoordinates().height == MinHeight) {
-                aircraft.OnAction(EventListener.Event.Unregistering);
-
                 Unregister(aircraft);
-
                 i -= 1;
             }
         }
     }
 
     @Override
-    public void Register(Aircraft aircraft)
-    {
-        if (!aircrafts.contains(aircraft)) {
-            aircrafts.add(aircraft);
-            aircraft.RegisterTower(this);
-            Broadcast("Tower", aircraft.GetName() + " registered to weather tower.");
-        }
+    public void Register(Aircraft aircraft) {
+        super.Register(aircraft);
+        aircraft.RegisterTower(this);
     }
 }
