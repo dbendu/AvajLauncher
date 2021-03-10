@@ -69,15 +69,16 @@ public abstract class Aircraft implements EventListener, Flyable {
     @Override
     public void OnAction()
     {
-        WeatherChangedActionHandler();
-    }
-
-    private void WeatherChangedActionHandler() {
         Weather weather = weatherTower.GetWeather(coordinates);
 
         weatherTower.Broadcast(name, messages[weather.ordinal()]);
 
         UpdatePosition(weatherOffsets[weather.ordinal()]);
+
+        if (coordinates.height == WeatherTower.MinHeight) {
+            Landing();
+            UnregisterTower();
+        }
     }
 
     private void Landing()

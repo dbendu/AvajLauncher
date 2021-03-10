@@ -52,7 +52,6 @@ public abstract class Tower {
     {
         if (aircrafts.remove(aircraft)) {
             Broadcast("Tower", aircraft.GetName() + " unregistered from weather tower.");
-            aircraft.UnregisterTower();
         }
     }
 

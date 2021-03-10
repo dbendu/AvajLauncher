@@ -21,12 +21,12 @@ public class Main {
 
     public static Scenario LoadScenario(String[] args)
     {
-        if (args.length != 2) {
+        if (args.length != 1) {
             throw new IllegalArgumentException("Ожидался один аргумент");
         }
 
         try {
-            return Scenario.Load(args[1]);
+            return Scenario.Load(args[0]);
         } catch (FileNotFoundException exception) {
             System.out.println(exception.getMessage());
             System.exit(1);
